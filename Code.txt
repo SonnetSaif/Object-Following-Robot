@@ -1,0 +1,158 @@
+***BlueToothLed***
+
+#define ledPin 13
+int state = 0;
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  
+  digitalWrite(ledPin, LOW);
+  Serial.begin(9600); // Default communication rate of the Bluetooth module
+}
+void loop() {
+  if(Serial.available() > 0){ // Checks whether data is comming from the serial port
+    state = Serial.read(); // Reads the data from the serial port
+ }
+ if (state == '0') {
+  digitalWrite(ledPin, LOW); // Turn LED OFF
+  Serial.println("LED: OFF"); // Send back, to the phone, the String "LED: ON"
+  state = 0;
+ }
+ else if (state == '1') {
+  digitalWrite(ledPin, HIGH);
+  Serial.println("LED: ON");
+  state = 0;
+ } 
+}
+
+
+***dc_motor_one***
+
+int LeftMotorForward = 7; // Pin 7 has Left Motor connected on Arduino boards.
+int LeftMotorReverse = 6; // Pin 6 has Left Motor connected on Arduino boards.
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(LeftMotorForward, OUTPUT);  
+  pinMode(LeftMotorReverse, OUTPUT);  
+}
+
+void loop() {
+   // Forward
+   digitalWrite(LeftMotorForward, HIGH);
+   digitalWrite(LeftMotorReverse, LOW);  
+   delay(2000);
+   
+   // Reverse
+   digitalWrite(LeftMotorReverse, HIGH);   
+   digitalWrite(LeftMotorForward, LOW);  
+   delay(2000);
+   
+   // Stop
+   digitalWrite(LeftMotorReverse, LOW);  
+   digitalWrite(LeftMotorForward, LOW);   
+   delay(2000);
+}
+
+***LCD_DISPLAY***
+
+#include <LiquidCrystal.h>
+LiquidCrystal LCD(13,12,11,10,9, 8);
+
+void setup() {
+  // set up the LCD's number of columns and rows
+  LCD.begin(16, 2);
+  // Print a message to the LCD
+  LCD.print("hello, world!");
+}
+
+void loop() {
+  // Turn off the display:
+  LCD.noDisplay();
+  delay(500);
+  // Turn on the display:
+  LCD.display();
+  delay(500);
+}
+
+***LCD_function***
+
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(13,12,11,10,9, 8);
+void setup() { 
+ lcd.begin(16,2); // set up the LCD's number of columns and rows: } 
+}
+void loop() { 
+ lcd.print("AUST"); // Prints "Arduino" on the LCD 
+ delay(1000); // 3 seconds delay 
+ lcd.setCursor(2,1); // Sets the location at which subsequent text written to the LCD will be displayed 
+ lcd.print("CSE"); 
+ delay(1000); 
+ lcd.clear(); // Clears the display 
+ lcd.blink(); //Displays the blinking LCD cursor 
+ delay(1000); 
+ lcd.setCursor(7,1); 
+ delay(1000); 
+ lcd.noBlink(); // Turns off the blinking LCD cursor 
+ lcd.cursor(); // Displays an underscore (line) at the position to which the next character will be written 
+ delay(1000); 
+ lcd.noCursor(); // Hides the LCD cursor 
+ lcd.clear(); // Clears the LCD screen 
+}
+
+***LDR***
+
+int ldr=A4;
+int value = 0;
+void setup() {
+Serial.begin(9600);
+}
+void loop() {
+  value= analogRead(ldr);
+  Serial.println("Intensity of the LDR is =");
+  Serial.println(value);
+  delay(1000);
+}
+
+
+***One_Led***
+
+
+int ledpin = 13;
+
+void setup() {
+          pinMode(ledpin,OUTPUT);
+}
+
+void loop() {
+          digitalWrite(ledpin,HIGH);
+          delay(500);
+          digitalWrite(ledpin,LOW);
+          delay(500);
+}
+
+
+***servo***
+
+
+#include <Servo.h>
+
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+int pos = 0;    // variable to store the servo position
+
+void setup() {
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+}
+
+void loop() {
+  for (pos = 0; pos <= 360; pos=pos+1) { // goes from 0 degrees to 360 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(20);                       // waits 20ms for the servo to reach the position
+  }
+  for (pos = 360; pos >= 0; pos=pos-1) { // goes from 360 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(20);                       // waits 20ms for the servo to reach the position
+  }
+}
